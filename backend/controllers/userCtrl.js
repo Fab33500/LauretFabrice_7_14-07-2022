@@ -4,13 +4,19 @@ const User = require("../models/User");
 
 // hash du password
 const bcrypt = require("bcrypt");
+//chiffre email
+const cryptoJs = require("crypto-js");
 
 exports.signup = (req, res, next) => {
+  const emailCryptoJs = cryptoJs
+    .HmacSHA256(req.body.email, process.env.CRYPTOJS_EMAIL)
+    .toString();
+
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
       const user = new User({
-        email: req.body.email,
+        email: emailCryptoJs,
         password: hash,
       });
       user
