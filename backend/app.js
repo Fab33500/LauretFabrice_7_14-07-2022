@@ -2,6 +2,7 @@
 const express = require("express");
 const morgan = require("morgan");
 require("./database/db");
+const mongoose = require("mongoose");
 
 // import routes
 const userRoutes = require("./routes/userRoute");
@@ -10,6 +11,10 @@ const app = express();
 
 // logs
 app.use(morgan("dev"));
+
+// debug mongoose
+console.log("-----------------debug mongoose-----------");
+mongoose.set("debug", true);
 
 // Ajout des entetes pour les erreurs CORS
 app.use((req, res, next) => {
